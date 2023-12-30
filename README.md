@@ -13,6 +13,8 @@ main lemonjProg{
 
 @start
   lemonjProg.print("Hello from Lemonj");
+
+  // This is a comment 1
   @comment="This is a commment 2";
 @end
 
@@ -98,5 +100,85 @@ na.type = "Mamals"; // an error occurs due to undefined property
   </button>
 
 }
+```
+## Web development (POST form data) - Server
+```jsx
 
+@formSet{
+  method: "POST"
+  action: "/api/login/"
+}
+
+<form @formSet>
+  <input type="text" name="username"/>
+  <input type="password" name="password"/>
+  <button type="submit">Submit</button>
+</form>
+```
+
+## Web development (validate data) - Server
+```jsx
+@class User{
+
+  @private, @auto
+  [required: True, maxLength: infinite, defaultCase: False]
+  var uid:string;
+
+  @private
+  [required: True, maxLength: 20, defaultCase: "lowercase"]
+  var username:string;
+
+  @private
+  [required: True, maxLength: 100, defaultCase: False,]
+  var password:string;
+
+  // Getter
+  User.get{
+    username => username;
+    password => password
+  }
+
+  // Setter
+  User.set{
+    uid => @noset
+    username => username;
+    password => password;
+  }
+
+}
+
+@{
+  formSet: {method: "POST", action:"/api/login", Class: "User"}
+}
+<form @formSet>
+  <input type="text" name="username" v-class="class as c, c.username"/>
+  <input type="password" name="password" v-class="c.password">
+  <button type="submit">Submit</button>
+</form>
+```
+
+## Advanced Syntax 
+```js
+
+// for every item in the list, add 2 to them
+var numbersList:int = [2,4,6,8,10];
+
+numberList as @n;
+
+n.every((item) => item +2);
+
+
+// Create a function to check if a number is even or odd,
+// it takes in a number as parameter, return the string "odd" or "even"
+function checkNumber as cn => cn.params(a){
+  params=params.required;
+  return:string on{
+    result::on;
+    a%2 == 0; ("even");
+    ("odd");
+    (@invalid);
+    scope=[0,1,1];
+    return result & [scope not @invalid];
+  }
+}
 ```
